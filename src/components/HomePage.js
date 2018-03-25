@@ -1,48 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { startGetBars } from '../actions/bars';
 
 export class HomePage extends React.Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = {
-      bars: [
-      { id: 1,
-        name: "The bar at the end of the universe",
-        lat : 45.493185,
-        lon : -122.6399857,
-        image_url: "https://goo.gl/maps/BpYvxubFY2D2"},
-      { id: 2,
-        name: "Resto like home",
-        lat : 48.8607105,
-        lon : 2.3057088,
-        image_url: "https://goo.gl/maps/xZCuv3KJccK2"}
-     ]
+      chosenBar: ''
     };
-    this.state.chosenBar = this.state.bars.length ? this.state.bars[0].id : '';
     this.chooseBar = this.chooseBar.bind(this);
   }
 
   chooseBar(e) {
     this.setState({chosenBar: e.target.value});
-    console.log(e.target.value);
+  }
+
+  componentWillMount() {
+    this.props.getBars();
+  }
+
+  renderBar(bar) {
+    return <option key={bar.id} value={bar.id}>{bar.name}</option>
   }
 
   render() {
+    if (!this.state.chosenBar) {
+      this.state.chosenBar = this.props.bars ? this.props.bars[0].id : '';
+    }
+
     return (
       <div className="container">
         <h1>Welcome</h1>
-        <p>Choose bar now</p>
-        <select name="bars" value={this.state.chosenBar} onChange={this.chooseBar}>
-          {this.state.bars.map(bar => <option key={bar.id} value={bar.id}>{bar.name}</option>)}
-        </select>
-        <hr/>
+        <h3>Choose bar now:</h3>
+        <div className="separator separator--spacey">
+          <select name="bars" value={this.state.chosenBar} onChange={this.chooseBar} >
+            {this.props.bars && this.props.bars.map(this.renderBar)}
+          </select>
+        </div>
         <div>
-          <Link to={ `/bar/${this.state.chosenBar}` }>Go!</Link>
+          <Link className="button" to={ `/bar/${this.state.chosenBar}` }>Go!</Link>
         </div>
       </div>
       )
   }
 }
 
-export default HomePage;
+const barsMapStateToProps = (state) => {
+  return {
+    bars: state.bars.data
+  }
+}
+
+const barsDispatchToProps = (dispatch) => ({
+  getBars: () => dispatch(startGetBars())
+});
+
+export default connect(barsMapStateToProps, barsDispatchToProps)(HomePage);
+

@@ -15,15 +15,39 @@ button:disabled {
   cursor: default;
 }
 
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+i {
+  font-size: 0.88em;
+  font-family: cursive;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  margin-left: 10px;
+}
+
+input[type="number"] {
+  width: 40px;
+  margin-left: 10px;
+}
+
 .is-active {
   font-weight: bold;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
+header {
+  color: #333;
 }
 
 select {
   min-width: 200px;
+  font-size: 20px;
 }

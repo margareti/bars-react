@@ -1,0 +1,11 @@
+.flex {
+  &__row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  &__img {
+    max-width: 70px;
+    margin-right: 20px;
+  }
+}
