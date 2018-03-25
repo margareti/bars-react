@@ -25,12 +25,13 @@ export class HomePage extends React.Component {
   }
 
   render() {
+    console.log('props', this.props)
     return (
       <div className="container">
         <h1>Welcome</h1>
         <p>Choose bar now</p>
         <select name="bars" value={this.state.chosenBar} onChange={this.chooseBar}>
-          {this.props.bars && this.props.bars.map(this.renderBar)}
+          {this.props.bars && this.props.bars.length && this.props.bars.map(this.renderBar)}
         </select>
         <hr/>
         <div>
@@ -42,9 +43,9 @@ export class HomePage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state ', state.bars)
+  console.log('map state to props ', state.bars)
   return {
-    bars: state.bars[0]
+    bars: state.bars
   }
 }
 

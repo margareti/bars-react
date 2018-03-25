@@ -1,5 +1,7 @@
 import fetch from 'cross-fetch';
 
+const env = 'http://default-environment.dihumbvgjw.us-east-2.elasticbeanstalk.com/';
+
 export const getBars = (json) => {
   console.log('get bars', json)
   return {
@@ -11,7 +13,7 @@ export const getBars = (json) => {
 export const startGetBars = () => {
 
   return function (dispatch) {
-    return fetch(`http://localhost:8080/bars`)
+    return fetch(`${env}/bars`)
       .then(
         response => response.json(),
         error => console.log('An error occurred.', error)
