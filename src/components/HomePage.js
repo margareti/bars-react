@@ -7,11 +7,14 @@ import { startGetBars } from '../actions/bars';
 export class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      chosenBar: ''
+    };
     this.chooseBar = this.chooseBar.bind(this);
   }
 
   chooseBar(e) {
+    console.log('chosen bar ', e.target.value)
     this.setState({chosenBar: e.target.value});
   }
 
@@ -20,32 +23,35 @@ export class HomePage extends React.Component {
   }
 
   renderBar(bar) {
-    console.log('bar ', bar)
-   return <option key={bar.id} value={bar.id}>{bar.name}</option>
+    return <option key={bar.id} value={bar.id}>{bar.name}</option>
   }
 
   render() {
-    console.log('props', this.props)
+    if (!this.state.chosenBar) {
+      this.state.chosenBar = this.props.bars ? this.props.bars[0].id : '';
+    }
+    
+    console.log('bar', this.state.chosenBar)
     return (
       <div className="container">
         <h1>Welcome</h1>
-        <p>Choose bar now</p>
+        <h3>Choose bar now:</h3>
         <select name="bars" value={this.state.chosenBar} onChange={this.chooseBar}>
-          {this.props.bars && this.props.bars.length && this.props.bars.map(this.renderBar)}
+          {this.props.bars && this.props.bars.map(this.renderBar)}
         </select>
         <hr/>
         <div>
-          <Link to={ `/bar/${this.state.chosenBar}` }>Go!</Link>
+          <Link className="button" to={ `/bar/${this.state.chosenBar}` }>Go!</Link>
         </div>
       </div>
       )
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('map state to props ', state.bars)
+const barsMapStateToProps = (state) => {
+  console.log('state in homepage', state)
   return {
-    bars: state.bars
+    bars: state.bars.data
   }
 }
 
@@ -53,5 +59,5 @@ const barsDispatchToProps = (dispatch) => ({
   getBars: () => dispatch(startGetBars())
 });
 
-export default connect(mapStateToProps, barsDispatchToProps)(HomePage);
+export default connect(barsMapStateToProps, barsDispatchToProps)(HomePage);
 

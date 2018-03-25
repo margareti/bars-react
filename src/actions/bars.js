@@ -23,3 +23,25 @@ export const startGetBars = () => {
       )
   }
 }
+
+export const getBar = (json) => {
+  console.log('get bar', json)
+  return {
+    type: 'GET_BAR',
+    bar: json
+  }
+}
+
+export const startGetBar = (id) => {
+
+  return function (dispatch) {
+    return fetch(`${env}/currentBarPrices/${id}`)
+      .then(
+        response => response.json(),
+        error => console.log('An error occurred.', error)
+      )
+      .then(json =>
+        dispatch(getBar(json))
+      )
+  }
+}
