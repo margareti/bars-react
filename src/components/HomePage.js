@@ -9,8 +9,6 @@ export class HomePage extends React.Component {
     super(props);
     this.state = {};
     this.chooseBar = this.chooseBar.bind(this);
-
-    this.props.bars ? this.props.bars : [];
   }
 
   chooseBar(e) {
@@ -21,13 +19,18 @@ export class HomePage extends React.Component {
     this.props.getBars();
   }
 
+  renderBar(bar) {
+    console.log('bar ', bar)
+   return <option key={bar.id} value={bar.id}>{bar.name}</option>
+  }
+
   render() {
     return (
       <div className="container">
         <h1>Welcome</h1>
         <p>Choose bar now</p>
         <select name="bars" value={this.state.chosenBar} onChange={this.chooseBar}>
-          {this.props.bars.map(bar => <option key={bar.id} value={bar.id}>{bar.name}</option>)}
+          {this.props.bars && this.props.bars.map(this.renderBar)}
         </select>
         <hr/>
         <div>
@@ -39,8 +42,9 @@ export class HomePage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('state ', state.bars)
   return {
-    bars: state.bars
+    bars: state.bars[0]
   }
 }
 
