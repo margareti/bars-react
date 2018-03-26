@@ -48,21 +48,30 @@ export const startGetBar = (id) => {
 export const saveOrder = (json) => {
   return {
     type: 'SAVE_ORDER',
-    bar: json
+    order: json
   }
 }
 
 export const startSaveOrder = (obj) => {
+  console.log('start save order', obj)
   return function (dispatch) {
     return fetch(`${env}/placeRound`, {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(obj)
     })
       .then(
-        response => response.json(),
+        (response) => {
+          console.log('after place round ', response)
+          return response.json()
+        },
         error => console.log('An error occurred.', error)
       )
       .then(json =>
-        dispatch(getBar(json))
+        dispatch(saveOrder(json))
       )
   }
 }

@@ -15,8 +15,8 @@ export class Order extends React.Component {
 
   renderOrderItem(orderItem) {
     return (
-      <li key={orderItem.product.id} >
-          {orderItem.product.name} | <span>Price: {orderItem.price}</span> | Quantity: 1{orderItem.quantity}
+      <li key={orderItem.id} >
+          Product Id: {orderItem.id} | Quantity: {orderItem.quantity}
       </li>)
   }
 
@@ -24,8 +24,9 @@ export class Order extends React.Component {
     return (
         <div className="container">
           <h1>Your Last Order</h1>
+          <h2>from BarId: <span>{this.props.order && this.props.order.barId}</span></h2>
           <ul>
-            {this.props.order && this.props.order.map(this.renderOrderItem)}
+            {this.props.order && this.props.order.orderedProducts.map(this.renderOrderItem)}
           </ul>
         </div>
       )

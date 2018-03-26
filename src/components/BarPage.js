@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startGetBar } from '../actions/bars';
-import { saveOrder } from '../actions/bars';
+import { startSaveOrder } from '../actions/bars';
 import { Redirect } from 'react-router'
 
 export class BarPage extends React.Component {
@@ -24,9 +24,9 @@ export class BarPage extends React.Component {
   }
 
   handleItemChange(e, item) {
-
+    console.log('menu item', item)
     const ordered = {
-      id: item.id,
+      id: item.product.id,
       quantity: 1
     };
 
@@ -57,14 +57,13 @@ export class BarPage extends React.Component {
   }
 
   renderMenuItem(menuItem) {
-    console.log('this in menuItem', this)
     return (
       <li key={menuItem.product.id} value={menuItem.id}>
         <input type="checkbox" id={menuItem.product.id} onChange={this.generateCheckboxHandler(menuItem, this.handleItemChange)}/>
         <label htmlFor={menuItem.product.id}>
           {menuItem.product.name} | <span>Price: {menuItem.price}</span>
         </label> | Quantity:
-        <input type="number" defaultValue="1" onChange={this.handleItemQuantity}/>
+        <input type="number" value={menuItem.quantity} onChange={this.handleItemQuantity}/>
       </li>)
   }
 
@@ -80,13 +79,16 @@ export class BarPage extends React.Component {
   }
 
   render() {
+    if (this.props.currentBar) {
+      this.state.menu = this.props.currentBar.menu
+    }
     return (
       <div className="container">
       <h1>Bar name: {this.props.currentBar && this.props.currentBar.bar.name}</h1>
       <h3>Menu</h3>
       <form onSubmit={this.composeOrder}>
         <ul>
-          {this.props.currentBar && this.props.currentBar.menu.map(this.renderMenuItem)}
+          {this.state.menu && this.state.menu.map(this.renderMenuItem)}
         </ul>
       </form>
       <div>
@@ -105,11 +107,9 @@ const barMapStateToProps = (state) => {
 
 const barDispatchToProps = (dispatch) => ({
   getBar: (id) => dispatch(startGetBar(id)),
-  saveOrder: (order) => dispatch(saveOrder(order))
+  saveOrder: (order) => dispatch(startSaveOrder(order))
 });
 
 export default connect(barMapStateToProps, barDispatchToProps)(BarPage);
 
 
-
-// <Link className="button button--sm" to={ `/order` }>Submit Order!</Link>
