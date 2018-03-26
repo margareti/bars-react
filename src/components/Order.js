@@ -15,8 +15,8 @@ export class Order extends React.Component {
 
   renderOrderItem(orderItem) {
     return (
-      <li key={orderItem.name} value={orderItem.name}>
-          {orderItem.name} | <span>Price: {orderItem.price}</span> | Quantity: {orderItem.quantity}
+      <li key={orderItem.product.id} >
+          {orderItem.product.name} | <span>Price: {orderItem.price}</span> | Quantity: 1{orderItem.quantity}
       </li>)
   }
 

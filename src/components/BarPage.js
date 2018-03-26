@@ -9,33 +9,64 @@ export class BarPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      barId: this.props.match.params.id
+      barId: this.props.match.params.id,
+      order: []
     }
 
     this.composeOrder = this.composeOrder.bind(this);
+    this.handleItemChange = this.handleItemChange.bind(this);
+    this.handleItemQuantity = this.handleItemQuantity.bind(this);
+    this.renderMenuItem = this.renderMenuItem.bind(this);
   }
 
   componentWillMount() {
     this.props.getBar(this.state.barId);
   }
 
-  handleItemChange() {
-    console.log('handle item change')
+  handleItemChange(e, item) {
+
+    const ordered = Object.assign({}, item);
+    let alreadyExistingId = null;
+
+    const isOrdered = this.state.order.some((item, index) => {
+      if (item.product.id === ordered.product.id) {
+        alreadyExistingId = index;
+        return true;
+      };
+    });
+
+    if (!isOrdered) {
+      this.state.order.push(ordered);
+    } else {
+      this.state.order = this.state.order.splice(1, alreadyExistingId);
+    }
+  }
+
+  handleItemQuantity() {
+
+  }
+
+  generateCheckboxHandler(value, method) {
+    return (e) => {
+      return method(e, value)
+    }
   }
 
   renderMenuItem(menuItem) {
+    console.log('this in menuItem', this)
     return (
       <li key={menuItem.product.id} value={menuItem.id}>
-        <input type="checkbox" id={menuItem.product.id} />
+        <input type="checkbox" id={menuItem.product.id} onChange={this.generateCheckboxHandler(menuItem, this.handleItemChange)}/>
         <label htmlFor={menuItem.product.id}>
           {menuItem.product.name} | <span>Price: {menuItem.price}</span>
         </label> | Quantity:
-        <input type="number" defaultValue="1" />
+        <input type="number" defaultValue="1" onChange={this.handleItemQuantity}/>
       </li>)
   }
 
   composeOrder() {
-    this.props.saveOrder([{'name': 'Leffe', price: 3.40, quantity: 1},{'name': 'Corona', price: 5.40, quantity: 1}]);
+    if (!this.state.order.length) return;
+    this.props.saveOrder(this.state.order);
     this.props.history.push('/order');
   }
 
@@ -50,7 +81,7 @@ export class BarPage extends React.Component {
         </ul>
       </form>
       <div>
-        <button onClick={ this.composeOrder } className="button button--sm">Submit Order!</button>
+        <button onClick={ this.composeOrder } className="button">Submit Order!</button>
       </div>
     </div>
     )

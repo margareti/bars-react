@@ -1,5 +1,5 @@
 .header {
-  background: lighten(cornflowerblue, 10%);
+  background-color: cornflowerblue;
   padding: 15px 0 ;
 
   &__inner {
@@ -14,16 +14,19 @@
     font-size: 30px;
     color: grey;
     text-decoration: none;
-    text-shadow: 1px 1px 0px pink;
+    text-shadow: 1px 1px 0px #333;
     font-weight: bold;
+    color: wheat;
   }
 
 
   &__link {
     display: inline-block;
     padding: 0 10px;
-    font-size: 0.9em;
-    color: #333;
+    font-size: 1.2em;
+    color: whitesmoke;
+    line-height: 1em;
+    text-decoration: none;
     &:first-of-type {
       padding-left: 0;
     }
