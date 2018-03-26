@@ -8,11 +8,9 @@ export default (state = {}, action) => {
       return Object.assign({}, state, {currentBar: action.bar})
 
     case 'SAVE_ORDER':
-      console.log('saving order', action.order)
       return Object.assign({}, state, {order: action.order})
 
     case 'GET_ORDER':
-      console.log('get order ', state);
       return state;
 
     default:

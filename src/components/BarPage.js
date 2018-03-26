@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startGetBar } from '../actions/bars';
 import { saveOrder } from '../actions/bars';
+import { Redirect } from 'react-router'
 
 export class BarPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      barId: this.props.match.params.id,
-
+      barId: this.props.match.params.id
     }
 
     this.composeOrder = this.composeOrder.bind(this);
@@ -36,7 +36,7 @@ export class BarPage extends React.Component {
 
   composeOrder() {
     this.props.saveOrder([{'name': 'Leffe', price: 3.40, quantity: 1},{'name': 'Corona', price: 5.40, quantity: 1}]);
-
+    return <Redirect to="/order"/>
   }
 
   render() {
@@ -50,7 +50,7 @@ export class BarPage extends React.Component {
         </ul>
       </form>
       <div>
-        <button onClick={ this.composeOrder } className="button button--sm" to={ `/order` }>Submit Order!</button>
+        <button onClick={ this.composeOrder } className="button button--sm">Submit Order!</button>
       </div>
     </div>
     )
