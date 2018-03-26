@@ -8,6 +8,10 @@ export default (state = {}, action) => {
       console.log('get bar', action.bar);
       return Object.assign({}, state, {currentBar: action.bar})
 
+    case 'SAVE_ORDER':
+      console.log('save order', action.order);
+      return Object.assign({}, state, {order: action.order})
+
     default:
       return state;
   };

@@ -3,7 +3,6 @@ import fetch from 'cross-fetch';
 const env = 'http://default-environment.dihumbvgjw.us-east-2.elasticbeanstalk.com/';
 
 export const getBars = (json) => {
-  console.log('get bars', json)
   return {
     type: 'GET_BARS',
     bars: json
@@ -25,7 +24,6 @@ export const startGetBars = () => {
 }
 
 export const getBar = (json) => {
-  console.log('get bar', json)
   return {
     type: 'GET_BAR',
     bar: json
@@ -45,3 +43,12 @@ export const startGetBar = (id) => {
       )
   }
 }
+
+export const saveOrder = (obj) => {
+  console.log('save order in action', obj)
+  return {
+    type: 'SAVE_ORDER',
+    order: obj
+  }
+}
+
