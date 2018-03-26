@@ -25,11 +25,15 @@ export class BarPage extends React.Component {
 
   handleItemChange(e, item) {
 
-    const ordered = Object.assign({}, item);
+    const ordered = {
+      id: item.id,
+      quantity: 1
+    };
+
     let alreadyExistingId = null;
 
     const isOrdered = this.state.order.some((item, index) => {
-      if (item.product.id === ordered.product.id) {
+      if (item.id === ordered.id) {
         alreadyExistingId = index;
         return true;
       };
@@ -66,7 +70,12 @@ export class BarPage extends React.Component {
 
   composeOrder() {
     if (!this.state.order.length) return;
-    this.props.saveOrder(this.state.order);
+    const orders = {
+      barId: this.state.barId,
+      orderedProducts: this.state.order.slice(0),
+      orderedAt: new Date().toISOString()
+    }
+    this.props.saveOrder(orders);
     this.props.history.push('/order');
   }
 

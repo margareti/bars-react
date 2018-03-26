@@ -1,6 +1,7 @@
 import fetch from 'cross-fetch';
 
-const env = 'http://default-environment.dihumbvgjw.us-east-2.elasticbeanstalk.com/';
+const env = 'http://localhost:8080'//'http://default-environment.dihumbvgjw.us-east-2.elasticbeanstalk.com/';
+
 
 export const getBars = (json) => {
   return {
@@ -44,11 +45,25 @@ export const startGetBar = (id) => {
   }
 }
 
-export const saveOrder = (obj) => {
-  console.log('save order in action', obj)
+export const saveOrder = (json) => {
   return {
     type: 'SAVE_ORDER',
-    order: obj
+    bar: json
+  }
+}
+
+export const startSaveOrder = (obj) => {
+  return function (dispatch) {
+    return fetch(`${env}/placeRound`, {
+      method: 'POST'
+    })
+      .then(
+        response => response.json(),
+        error => console.log('An error occurred.', error)
+      )
+      .then(json =>
+        dispatch(getBar(json))
+      )
   }
 }
 
