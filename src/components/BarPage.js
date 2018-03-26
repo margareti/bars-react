@@ -11,12 +11,12 @@ export class BarPage extends React.Component {
       barId: this.props.match.params.id,
 
     }
+
+    this.composeOrder = this.composeOrder.bind(this);
   }
 
   componentWillMount() {
-    console.log('in will mount', this.props)
     this.props.getBar(this.state.barId);
-    // this.props.saveOrder([{'name': 'Leffe'},{'name': 'Corona'}]);
   }
 
   handleItemChange() {
@@ -35,12 +35,11 @@ export class BarPage extends React.Component {
   }
 
   composeOrder() {
-    console.log('props in compose order')
-    this.props.saveOrder([{'name': 'Leffe'},{'name': 'Corona'}]);
+    this.props.saveOrder([{'name': 'Leffe', price: 3.40, quantity: 1},{'name': 'Corona', price: 5.40, quantity: 1}]);
+
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="container">
       <h1>Bar name: {this.props.currentBar && this.props.currentBar.bar.name}</h1>
@@ -59,7 +58,6 @@ export class BarPage extends React.Component {
 }
 
 const barMapStateToProps = (state) => {
-  console.log(state.bars)
   return {
     currentBar: state.bars.currentBar
   }

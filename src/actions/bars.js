@@ -52,3 +52,9 @@ export const saveOrder = (obj) => {
   }
 }
 
+export const getOrder = () => {
+  return {
+    type: 'GET_ORDER'
+  }
+}
+
