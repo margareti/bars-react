@@ -36,7 +36,7 @@ export class BarPage extends React.Component {
 
   composeOrder() {
     this.props.saveOrder([{'name': 'Leffe', price: 3.40, quantity: 1},{'name': 'Corona', price: 5.40, quantity: 1}]);
-    return <Redirect to="/order"/>
+    this.props.history.push('/order');
   }
 
   render() {

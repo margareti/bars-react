@@ -13,11 +13,20 @@ export class Order extends React.Component {
     this.props.getOrder();
   }
 
+  renderOrderItem(orderItem) {
+    return (
+      <li key={orderItem.name} value={orderItem.name}>
+          {orderItem.name} | <span>Price: {orderItem.price}</span> | Quantity: {orderItem.quantity}
+      </li>)
+  }
+
   render() {
     return (
         <div className="container">
           <h1>Your Last Order</h1>
-          
+          <ul>
+            {this.props.order && this.props.order.map(this.renderOrderItem)}
+          </ul>
         </div>
       )
   }
