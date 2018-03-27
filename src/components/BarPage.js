@@ -45,7 +45,8 @@ export class BarPage extends React.Component {
     }
   }
 
-  handleItemQuantity() {
+  handleItemQuantity(e, item) {
+    item.quantity = e.target.value;
 
   }
 
@@ -60,9 +61,9 @@ export class BarPage extends React.Component {
       <li key={menuItem.product.id} value={menuItem.id}>
         <input type="checkbox" id={menuItem.product.id} onChange={this.generateHandler(menuItem, this.handleItemChange)}/>
         <label htmlFor={menuItem.product.id}>
-          {menuItem.product.name} | <span>Price: {menuItem.price * menuItem.quantity}</span>
+          {menuItem.product.name} | <span>Price: {menuItem.price}</span>
         </label> | Quantity:
-        <input type="number" value={menuItem.quantity} onChange={this.generateHandler(menuItem, this.handleItemQuantity)}/>
+        <input type="number" onChange={this.generateHandler(menuItem, this.handleItemQuantity)}/>
       </li>)
   }
 
