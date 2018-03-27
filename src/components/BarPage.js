@@ -24,10 +24,9 @@ export class BarPage extends React.Component {
   }
 
   handleItemChange(e, item) {
-    console.log('menu item', item)
     const ordered = {
       id: item.product.id,
-      quantity: 1
+      quantity: item.quantity
     };
 
     let alreadyExistingId = null;
@@ -50,7 +49,7 @@ export class BarPage extends React.Component {
 
   }
 
-  generateCheckboxHandler(value, method) {
+  generateHandler(value, method) {
     return (e) => {
       return method(e, value)
     }
@@ -59,11 +58,11 @@ export class BarPage extends React.Component {
   renderMenuItem(menuItem) {
     return (
       <li key={menuItem.product.id} value={menuItem.id}>
-        <input type="checkbox" id={menuItem.product.id} onChange={this.generateCheckboxHandler(menuItem, this.handleItemChange)}/>
+        <input type="checkbox" id={menuItem.product.id} onChange={this.generateHandler(menuItem, this.handleItemChange)}/>
         <label htmlFor={menuItem.product.id}>
-          {menuItem.product.name} | <span>Price: {menuItem.price}</span>
+          {menuItem.product.name} | <span>Price: {menuItem.price * menuItem.quantity}</span>
         </label> | Quantity:
-        <input type="number" value={menuItem.quantity} onChange={this.handleItemQuantity}/>
+        <input type="number" value={menuItem.quantity} onChange={this.generateHandler(menuItem, this.handleItemQuantity)}/>
       </li>)
   }
 
@@ -80,7 +79,10 @@ export class BarPage extends React.Component {
 
   render() {
     if (this.props.currentBar) {
-      this.state.menu = this.props.currentBar.menu
+      this.state.menu = this.props.currentBar.menu.map((item) => {
+        item.quantity = 1;
+        return item;
+      });
     }
     return (
       <div className="container">
