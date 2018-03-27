@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { startGetLastOrder } from '../actions/bars';
+import { startGetLastOrder } from '../actions/orders';
 
 export class Order extends React.Component {
   constructor(props) {
@@ -22,21 +22,20 @@ export class Order extends React.Component {
 
   render() {
     return (
-        <div className="container">
-          <h1>Your Last Order</h1>
-          <h2>from BarId: <span>{this.props.order && this.props.order.barId}</span></h2>
-          <ul>
-            {this.props.order && this.props.order.orderedProducts.map(this.renderOrderItem)}
-          </ul>
-        </div>
+      <div className="container">
+        <h1>Your Last Order</h1>
+        <h2>from BarId: <span>{this.props.order && this.props.order.barId}</span></h2>
+        <ul>
+          {this.props.order && this.props.order.orderedProducts.map(this.renderOrderItem)}
+        </ul>
+      </div>
       )
   }
 }
 
 const orderMapStateToProps = (state) => {
-  console.log('order', state)
   return {
-    order: state.bars.lastOrder
+    order: state.orders.lastOrder
   }
 }
 

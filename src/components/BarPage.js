@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startGetBar } from '../actions/bars';
-import { startSaveOrder } from '../actions/bars';
+import { startSaveOrder } from '../actions/orders';
 import { Redirect } from 'react-router'
 
 export class BarPage extends React.Component {
@@ -87,7 +87,7 @@ export class BarPage extends React.Component {
     this.props.history.push('/order');
   }
 
-  render() {
+  render() {  
     return (
       <div className="container">
       <h1>Bar name: {this.props.currentBar && this.props.currentBar.bar.name}</h1>

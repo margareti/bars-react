@@ -14,7 +14,6 @@ export class HomePage extends React.Component {
   }
 
   chooseBar(e) {
-    console.log('chosen bar ', e.target.value)
     this.setState({chosenBar: e.target.value});
   }
 
@@ -30,8 +29,7 @@ export class HomePage extends React.Component {
     if (!this.state.chosenBar) {
       this.state.chosenBar = this.props.bars ? this.props.bars[0].id : '';
     }
-    
-    console.log('bar', this.state.chosenBar)
+
     return (
       <div className="container">
         <h1>Welcome</h1>
@@ -49,7 +47,6 @@ export class HomePage extends React.Component {
 }
 
 const barsMapStateToProps = (state) => {
-  console.log('state in homepage', state)
   return {
     bars: state.bars.data
   }
