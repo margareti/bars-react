@@ -76,9 +76,23 @@ export const startSaveOrder = (obj) => {
   }
 }
 
-export const getOrder = () => {
+export const getLastOrder = (json) => {
   return {
-    type: 'GET_ORDER'
+    type: 'GET_ORDER',
+    lastOrder: json
   }
 }
 
+export const startGetLastOrder = () => {
+
+  return function (dispatch) {
+    return fetch(`${env}/lastOrder/`)
+      .then(
+        response => response.json(),
+        error => console.log('An error occurred.', error)
+      )
+      .then(json =>
+        dispatch(getLastOrder(json))
+      )
+  }
+}

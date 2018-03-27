@@ -12,7 +12,8 @@ export default (state = {}, action) => {
       return Object.assign({}, state, {order: action.order})
 
     case 'GET_ORDER':
-      return state;
+      console.log(action)
+      return Object.assign({}, state, {lastOrder: action.lastOrder});
 
     default:
       return state;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getOrder } from '../actions/bars';
+import { startGetLastOrder } from '../actions/bars';
 
 export class Order extends React.Component {
   constructor(props) {
@@ -36,12 +36,12 @@ export class Order extends React.Component {
 const orderMapStateToProps = (state) => {
   console.log('order', state)
   return {
-    order: state.bars.order
+    order: state.bars.lastOrder
   }
 }
 
 const orderDispatchToProps = (dispatch) => ({
-  getOrder: () => dispatch(getOrder())
+  getOrder: () => dispatch(startGetLastOrder())
 });
 
 export default connect(orderMapStateToProps, orderDispatchToProps)(Order);

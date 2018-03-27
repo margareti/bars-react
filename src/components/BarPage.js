@@ -10,7 +10,8 @@ export class BarPage extends React.Component {
     super(props);
     this.state = {
       barId: this.props.match.params.id,
-      order: []
+      order: [],
+      menu: []
     }
 
     this.composeOrder = this.composeOrder.bind(this);
@@ -21,6 +22,14 @@ export class BarPage extends React.Component {
 
   componentWillMount() {
     this.props.getBar(this.state.barId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let currentMenu = this.props.currentBar || {}
+    if (currentMenu !== nextProps.currentBar.menu) {
+      const newMenu = nextProps.currentBar.menu.map(item => Object.assign({}, item, {quantity: 1}))
+      this.setState({ menu: newMenu })
+    }
   }
 
   handleItemChange(e, item) {
@@ -79,12 +88,6 @@ export class BarPage extends React.Component {
   }
 
   render() {
-    if (this.props.currentBar) {
-      this.state.menu = this.props.currentBar.menu.map((item) => {
-        item.quantity = 1;
-        return item;
-      });
-    }
     return (
       <div className="container">
       <h1>Bar name: {this.props.currentBar && this.props.currentBar.bar.name}</h1>
