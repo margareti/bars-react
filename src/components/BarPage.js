@@ -34,7 +34,7 @@ export class BarPage extends React.Component {
 
   handleItemChange(e, item) {
     const ordered = {
-      id: item.product.id,
+      id: item.id,
       quantity: item.quantity
     };
 
@@ -67,10 +67,10 @@ export class BarPage extends React.Component {
 
   renderMenuItem(menuItem) {
     return (
-      <li key={menuItem.product.id} value={menuItem.id}>
-        <input type="checkbox" id={menuItem.product.id} onChange={this.generateHandler(menuItem, this.handleItemChange)}/>
-        <label htmlFor={menuItem.product.id}>
-          {menuItem.product.name} | <span>Price: {menuItem.price}</span>
+      <li key={menuItem.id} value={menuItem.id}>
+        <input type="checkbox" id={menuItem.id} onChange={this.generateHandler(menuItem, this.handleItemChange)}/>
+        <label htmlFor={menuItem.id}>
+          {menuItem.name} | <span>Price: {menuItem.price}</span>
         </label> | Quantity:
         <input type="number" onChange={this.generateHandler(menuItem, this.handleItemQuantity)}/>
       </li>)
@@ -83,8 +83,9 @@ export class BarPage extends React.Component {
       orderedProducts: this.state.order.slice(0),
       orderedAt: new Date().toISOString()
     }
-    this.props.saveOrder(orders);
-    this.props.history.push('/order');
+    this.props.saveOrder(orders).then(() => {
+      this.props.history.push('/order');
+    });
   }
 
   render() {  

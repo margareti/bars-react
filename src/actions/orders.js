@@ -10,7 +10,6 @@ export const saveOrder = (json) => {
 }
 
 export const startSaveOrder = (obj) => {
-  console.log('start save order', obj)
   return function (dispatch) {
     return fetch(`${env}/placeRound`, {
       method: 'POST',
@@ -21,10 +20,7 @@ export const startSaveOrder = (obj) => {
       body: JSON.stringify(obj)
     })
       .then(
-        (response) => {
-          console.log('after place round ', response)
-          return response.json()
-        },
+        response => response.json(),
         error => console.log('An error occurred.', error)
       )
       .then(json =>
